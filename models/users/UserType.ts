@@ -3,8 +3,9 @@
  */
 
 enum UserType {
-    student = "STUDENT",
-    professor = "PROFESSOR",
+    chef = "chef",
+    moderator = "moderator",
+    user = "user",
 }
 
 export default UserType;

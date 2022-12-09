@@ -6,6 +6,14 @@ import mongoose from "mongoose";
 import User from "../../models/users/User";
 
 const UserSchema = new mongoose.Schema<User>({
+    firstname: {
+        type: String,
+        required: true
+    },
+    lastname: {
+        type: String,
+        required: true
+    },
     username: {
         type: String,
         required: true,
@@ -16,25 +24,17 @@ const UserSchema = new mongoose.Schema<User>({
         required: true,
         default: `testPassword${Date.now()}`
     },
-    firstName: String,
-    lastName: String,
     email: {
         type: String,
         required: true,
         default: `testEmail${Date.now()}`
     },
     profilePhoto: String,
-    headerImage: String,
-    biography: String,
-    dateOfBirth: Date,
     userType: {
         type: String,
-        enum: ["STUDENT", "PROFESSOR"]
+        required: true,
+        enum: ["chef", "moderator", "user"]
     },
-    joined: {
-        type: Date,
-        default: Date.now
-    }
 }, {collection: "users"});
 
 export default UserSchema;

@@ -6,29 +6,21 @@ import UserType from "./UserType";
 
 /**
  * @typedef User Represents a user
+ * @property {String} firstname User's first name
+ * @property {String} lastname User's last name
  * @property {String} username User's username
  * @property {String} password User's password
  * @property {String} email User's email address
- * @property {String} firstName User's first name
- * @property {String} lastName User's last name
  * @property {String} profilePhoto User's profile photograph
- * @property {String} headerImage User's header image
- * @property {String} biography User's biography
- * @property {Date} dateOfBirth User's date of birth
  * @property {UserType} userType User's type
- * @property {Date} joined User's date of joining
  */
 export default interface User {
     _id?: mongoose.Schema.Types.ObjectId,
+    firstname: string,
+    lastname: string,
     username: string,
     password: string,
     email: string,
-    firstName?: string,
-    lastName?: string,
     profilePhoto?: string,
-    headerImage?: string,
-    biography?: string,
-    dateOfBirth?: Date,
-    userType?: UserType,
-    joined?: Date,
+    userType: UserType
 };
