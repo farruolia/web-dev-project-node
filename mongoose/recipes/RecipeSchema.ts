@@ -3,25 +3,32 @@
  * defines shape of the documents in post
  */
 import mongoose, {Schema} from "mongoose";
-import Post from "../../models/posts/Post";
+import Recipe from "../../models/recipes/Recipe";
 
-const PostSchema = new mongoose.Schema<Post>({
-    post: {
+const RecipeSchema = new mongoose.Schema<Recipe>({
+    title: {
         type: String,
         required: true
     },
-    postedBy: {
+    chef: {
         type: Schema.Types.ObjectId,
         ref: "UserModel"
+    },
+    steps: [{
+        type: String,
+        required: true,
+    }],
+    dishId: {
+        type: String,
+        required: true,
     },
     postedOn: {
         type: Date,
         default: Date.now
     },
-    image: String,
-    avatarLogo: String
-}, {collection: "posts"});
+    image: String
+}, {collection: "recipes"});
 
-export default PostSchema;
+export default RecipeSchema;
 
 

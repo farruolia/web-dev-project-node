@@ -14,6 +14,7 @@ import {Express, Request, Response} from "express";
  *     <li>DELETE /api/users/:uid to remove a particular user instance</li>
  *     <li>GET /api/users/:uid to retrieve an individual user instance </li>
  *     <li>GET /api/users to retrieve all the user instances</li>
+ *     <li>DELETE /api/users to delete all users in the database</li>
  * </ul>
  * @property {UserDao} userDao Singleton DAO implementing user CRUD operations
  * @property {UserController} userController Singleton controller implementing

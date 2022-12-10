@@ -16,6 +16,7 @@
 import express, {Request, Response} from 'express';
 import mongoose from "mongoose";
 import UserController from "./controllers/UserController";
+import RecipeController from "./controllers/RecipeController";
 require('dotenv').config({debug: true});
 
 // build the connection string
@@ -38,6 +39,7 @@ app.get('/add/:a/:b', (req: Request, res: Response) =>
  * create RESTful Web service API
  */
 UserController.getInstance(app);
+RecipeController.getInstance(app);
 
 /**
  * Start a server listening at port 4000 locally
