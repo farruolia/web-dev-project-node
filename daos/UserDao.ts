@@ -103,4 +103,7 @@ export default class UserDao {
     findUserByEmail = async (email: string): Promise<any> =>
         UserModel.findOne({email: email});
 
+    findUserByCredentials = async (email: string, password: string): Promise<any> =>
+        UserModel.findOne({email:email, password:password});
+
 };

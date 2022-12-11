@@ -31,14 +31,14 @@ class UserDao {
          * @returns Promise To be notified when user is inserted into the database
          */
         this.createUser = (user) => __awaiter(this, void 0, void 0, function* () {
-            if (user.userType == "chef") {
+            if (user.userType.toString().toLowerCase() == "chef") {
                 user.userType = UserType_1.default.chef;
             }
-            else if (user.userType == "moderator") {
-                user.userType = UserType_1.default.moderator;
+            else if (user.userType.toString().toLowerCase() == "staff") {
+                user.userType = UserType_1.default.staff;
             }
-            else if (user.userType == "user") {
-                user.userType = UserType_1.default.user;
+            else if (user.userType.toString().toLowerCase() == "enthusiast") {
+                user.userType = UserType_1.default.enthusiast;
             }
             return UserModel_1.default
                 .create(user)

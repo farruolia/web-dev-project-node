@@ -1,7 +1,5 @@
 import UserDao from "../daos/UserDao";
 import {Express} from "express";
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
 
 /**
  * @file Declares controller that can talk to the front-end services for Authentication and also talk to the DAOs for
@@ -17,7 +15,7 @@ export default class AuthenticationController {
             AuthenticationController.authenticationController = new AuthenticationController();
             app.post("/api/auth/signup", AuthenticationController.authenticationController.signup);
             app.post("/api/auth/login", AuthenticationController.authenticationController.login);
-            app.post("/api/auth/profile", AuthenticationController.authenticationController.profile);
+            app.get("/api/auth/profile", AuthenticationController.authenticationController.profile);
             app.post("/api/auth/logout", AuthenticationController.authenticationController.logout);
         }
         return AuthenticationController.authenticationController;
@@ -62,19 +60,14 @@ export default class AuthenticationController {
             const user = req.body;
             const email = user.email;
             const password = user.password;
-            const existingUser = await AuthenticationController.userDao.findUserByEmail(email);
-
+            const existingUser = await AuthenticationController.userDao.findUserByCredentials(email, password);
             if (!existingUser) {
                 res.sendStatus(403);
                 return;
-            }
-            const match = await bcrypt.compare(password,   existingUser.password);
-            if (match) {
+            } else {
                 existingUser.password = '*****';
                 req.session['profile'] = existingUser;
                 res.json(existingUser);
-            } else {
-                res.sendStatus(403);
             }
         } catch (e) {
             console.error(e);
