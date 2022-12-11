@@ -18,7 +18,6 @@ export default interface User {
     _id?: mongoose.Schema.Types.ObjectId,
     firstname: string,
     lastname: string,
-    username: string,
     password: string,
     email: string,
     profilePhoto?: string,

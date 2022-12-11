@@ -106,4 +106,12 @@ export default class UserDao {
             .deleteMany({})
             .catch(error => error);
 
+    /**
+     * Uses UserModel to retrieve single user document from users collection
+     * @param {string} email User's email id
+     * @returns Promise To be notified when user is retrieved from the database
+     */
+    findUserByEmail = async (email: string): Promise<any> =>
+        UserModel.findOne({email: email});
+
 };

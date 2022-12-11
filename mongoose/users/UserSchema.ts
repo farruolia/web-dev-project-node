@@ -14,11 +14,6 @@ const UserSchema = new mongoose.Schema<User>({
         type: String,
         required: true
     },
-    username: {
-        type: String,
-        required: true,
-        default: `testUsername${Date.now()}`
-    },
     password: {
         type: String,
         required: true,
