@@ -26,10 +26,8 @@ export default class AuthenticationController {
     private constructor() {}
 
     signup = async (req: any, res: any) => {
+        console.log("HERE")
         const newUser = req.body;
-        const password = newUser.password;
-
-        newUser.password = await bcrypt.hash(password, saltRounds);
 
         const existingUser = await AuthenticationController.userDao.findUserByEmail(req.body.email);
         if (existingUser) {
