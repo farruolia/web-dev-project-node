@@ -2,7 +2,6 @@
  * @file Declares User data type representing users in Edu Lab
  */
 import mongoose from "mongoose";
-import UserType from "./UserType";
 
 /**
  * @typedef User Represents a user
@@ -21,5 +20,5 @@ export default interface User {
     password: string,
     email: string,
     profilePhoto?: string,
-    userType: UserType
+    userType: string
 };

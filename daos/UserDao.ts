@@ -4,7 +4,6 @@
  */
 import UserModel from "../mongoose/users/UserModel";
 import User from "../models/users/User";
-import UserType from "../models/users/UserType";
 
 /**
  * @class UserDao Implements Data Access Object managing data storage
@@ -33,20 +32,10 @@ export default class UserDao {
      * @param {User} user Instance to be inserted into the database
      * @returns Promise To be notified when user is inserted into the database
      */
-    createUser = async (user: User): Promise<User> => {
-        if (user.userType == "chef"){
-            user.userType = UserType.chef
-        }
-        else if (user.userType == "moderator") {
-            user.userType = UserType.moderator
-        }
-        else if (user.userType == "user") {
-            user.userType = UserType.user
-        }
-        return UserModel
+    createUser = async (user: User): Promise<User> =>
+        UserModel
             .create(user)
             .catch(error => error);
-    }
 
     /**
      * Updates user with new values in database

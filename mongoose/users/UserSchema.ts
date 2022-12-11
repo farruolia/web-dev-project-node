@@ -27,8 +27,7 @@ const UserSchema = new mongoose.Schema<User>({
     profilePhoto: String,
     userType: {
         type: String,
-        required: true,
-        enum: ["chef", "moderator", "user"]
+        required: true
     },
 }, {collection: "users"});
 
