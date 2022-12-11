@@ -24,7 +24,6 @@ export default class AuthenticationController {
     private constructor() {}
 
     signup = async (req: any, res: any) => {
-        console.log("HERE")
         const newUser = req.body;
 
         const existingUser = await AuthenticationController.userDao.findUserByEmail(req.body.email);
