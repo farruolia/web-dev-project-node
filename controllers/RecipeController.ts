@@ -9,12 +9,12 @@ import Recipe from "../models/recipes/Recipe";
  * @class RecipeController Implements RESTful Web service API for recipe resource.
  * Defines the following HTTP endpoints:
  * <ul>
- *     <li>POST /api/users/:uid/recipes to create a new recipe instance for
+ *     <li>POST /api/recipes to create a new recipe instance for
  *     a given user</li>
  *     <li>PUT /api/recipes/:rid to modify an individual recipe instance</li>
  *     <li>DELETE /api/recipes/:rid to remove a particular recipe instance</li>
  *     <li>GET /api/recipes/:rid to retrieve a particular recipe instance</li>
- *     <li>GET /api/users/:uid/recipes to retrieve recipes for a given user</li>
+ *     <li>GET /api/users/recipes to retrieve recipes for a given user</li>
  *     <li>GET /api/dishes/:did/recipes to retrieve recipes for a particular dish</li>
  *     <li>GET /api/recipes/random to retrieve 5 random recipes for the home page</li>
  *     <li>GET /api/recipes to retrieve all the recipes</li>
@@ -38,11 +38,11 @@ export default class RecipeController {
         if (RecipeController.recipeController === null) {
             RecipeController.recipeController = new RecipeController();
 
-            app.post("/api/users/:uid/recipes", RecipeController.recipeController.createRecipe);
+            app.post("/api/recipes", RecipeController.recipeController.createRecipe);
             app.put("/api/recipes/:rid", RecipeController.recipeController.updateRecipe);
             app.delete("/api/recipes/:rid", RecipeController.recipeController.deleteRecipe);
             app.get("/api/recipes/:rid", RecipeController.recipeController.findRecipeById);
-            app.get("/api/users/:uid/recipes", RecipeController.recipeController.findAllRecipesByUser);
+            app.get("/api/users/recipes", RecipeController.recipeController.findAllRecipesByUser);
             app.get("/api/dishes/:did/recipes", RecipeController.recipeController.findRecipeByDishId);
             //app.get("/api/recipes/random", RecipeController.recipeController.findRandomRecipes);
             app.get("/api/recipes", RecipeController.recipeController.findAllRecipes);
@@ -60,9 +60,16 @@ export default class RecipeController {
      * body formatted as JSON containing the new recipe that was inserted in the
      * database
      */
-    createRecipe = (req: Request, res: Response) => {
-        RecipeController.recipeDao.createRecipe(req.params.uid, req.body)
-            .then((recipe: Recipe) => res.json(recipe));
+    createRecipe = (req: any, res: any) => {
+        try {
+            let userId = req.session["profile"]._id
+            return RecipeController.recipeDao.createRecipe(userId, req.body)
+                .then((recipe: Recipe) => res.json(recipe));
+        }
+        catch (e) {
+            res.status(403).json({ error: e });
+        }
+
     }
 
     /**
@@ -102,9 +109,16 @@ export default class RecipeController {
      * @param {Response} res Represents response to client, including the
      * body formatted as JSON arrays containing the recipe objects
      */
-    findAllRecipesByUser = (req: Request, res: Response) =>
-        RecipeController.recipeDao.findAllRecipesByUser(req.params.uid)
-            .then((recipes: Recipe[]) => res.json(recipes));
+    findAllRecipesByUser = (req: any, res: any) => {
+        try {
+            let userId = req.session["profile"]._id
+            return RecipeController.recipeDao.findAllRecipesByUser(userId)
+                .then((recipes: Recipe[]) => res.json(recipes));
+        }
+        catch (e) {
+            res.status(403).json({ error: e });
+        }
+    }
 
     /**
      * @param {Request} req Represents request from client, including path
