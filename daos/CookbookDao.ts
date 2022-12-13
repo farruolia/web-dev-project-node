@@ -50,4 +50,16 @@ export default class CookbookDao {
         CookbookModel
             .deleteOne({bookmarkedRecipe: rid, bookmarkedBy: uid})
             .catch(error => error);
+
+    /**
+     * Uses CookbookModel to retrieve a list of recipes bookmarked by a user
+     * @param {string} uid User id of the user whose bookmarked recipes have to be retrieved
+     * @returns Promise To be notified when the bookmarks are retrieved from the database
+     */
+    findRecipesBookmarkedByUser = async (uid: string): Promise<Cookbook[]> =>
+        CookbookModel
+            .find({bookmarkedBy: uid})
+            .populate("bookmarkedRecipe")
+            .exec()
+            .catch(error => error);
 }

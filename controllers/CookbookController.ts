@@ -36,7 +36,8 @@ export default class CookbookController {
         if (CookbookController.cookbookController === null) {
             CookbookController.cookbookController = new CookbookController();
             app.post('/api/cookbook/:rid/users/:uid', CookbookController.cookbookController.userBookmarksRecipe);
-            app.delete('/api/cookbook/:rid/users/:uid', CookbookController.cookbookController.userUnbookmarksRecipe)
+            app.delete('/api/cookbook/:rid/users/:uid', CookbookController.cookbookController.userUnbookmarksRecipe);
+            app.get('/api/cookbook/users/:uid', CookbookController.cookbookController.findRecipesBookmarkedByUser)
         }
         return CookbookController.cookbookController;
     }
@@ -73,6 +74,23 @@ export default class CookbookController {
         try {
             let userId = req.params.uid === "me" && req.session['profile'] ? req.session['profile']._id : req.params.uid;
             return CookbookController.cookBookDao.userUnbookmarksRecipe(req.params.rid, userId)
+                .then(status => res.send(status));
+        }
+        catch (e) {
+            res.status(403).json({ error: e });
+        }
+    }
+
+    /**
+     * Uses CookbookModel to retrieve a list of recipes bookmarked by a user
+     * @param {Request} req Represents HTTP request, including the path parameter uid representing the user
+     * @param {Response} res Represents HTTP response, including the
+     * body formatted as JSON arrays containing the cookbook objects
+     */
+    findRecipesBookmarkedByUser = (req: any, res: any) => {
+        try {
+            let userId = req.params.uid === "me" && req.session['profile'] ? req.session['profile']._id : req.params.uid;
+            return CookbookController.cookBookDao.findRecipesBookmarkedByUser(userId)
                 .then(status => res.send(status));
         }
         catch (e) {
