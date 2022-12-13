@@ -17,7 +17,7 @@ export default interface Recipe {
     title: string,
     chef: User,
     steps: string[],
-    dishId: string,
+    description: string,
     postedOn?: Date,
     image?: string
 };

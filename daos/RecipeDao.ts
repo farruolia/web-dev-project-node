@@ -27,10 +27,6 @@ export default class RecipeDao {
 
     private constructor() {}
 
-    private static async getRandomArbitrary(min: number, max: number) {
-        return Math.ceil(Math.random() * (max - min) + min);
-    }
-
     /**
      * Inserts recipe instance into the database
      * @param {string} uid User who creates recipe
@@ -88,32 +84,6 @@ export default class RecipeDao {
             .exec()
             .catch(error => error);
 
-    /**
-     * Uses RecipeModel to retrieve a recipe by dishId
-     * @param {string} did Dish id
-     * @returns Promise To be notified when the recipe is retrieved from the database
-     */
-    findRecipeByDishId = async (did: string): Promise<any> =>
-        RecipeModel
-            .find({dishId: did})
-            .populate("chef")
-            .exec()
-            .catch(error => error);
-
-    /**
-     * Uses RecipeModel to retrieve 5 random recipes
-     * @returns Promise To be notified when the recipes are retrieved from the database
-     */
-    findRandomRecipes = async (): Promise<Recipe[]> => {
-        const count = await RecipeModel.count();
-        const skipRecords = await RecipeDao.getRandomArbitrary(1, count - 1);
-
-        return RecipeModel
-            .find()
-            .skip(skipRecords)
-            .exec()
-            .catch(error => error);
-    }
 
     /**
      * Uses RecipeModel to retrieve all recipes

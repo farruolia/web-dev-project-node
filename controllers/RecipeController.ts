@@ -15,8 +15,6 @@ import Recipe from "../models/recipes/Recipe";
  *     <li>DELETE /api/recipes/:rid to remove a particular recipe instance</li>
  *     <li>GET /api/recipes/:rid to retrieve a particular recipe instance</li>
  *     <li>GET /api/users/:uid/recipes to retrieve recipes for a given user</li>
- *     <li>GET /api/dishes/:did/recipes to retrieve recipes for a particular dish</li>
- *     <li>GET /api/recipes/random to retrieve 5 random recipes for the home page</li>
  *     <li>GET /api/recipes to retrieve all the recipes</li>
  * </ul>
  * @property {RecipeDao} recipeDao Singleton DAO implementing recipe CRUD operations
@@ -43,8 +41,6 @@ export default class RecipeController {
             app.delete("/api/recipes/:rid", RecipeController.recipeController.deleteRecipe);
             app.get("/api/recipes/:rid", RecipeController.recipeController.findRecipeById);
             app.get("/api/users/:uid/recipes", RecipeController.recipeController.findAllRecipesByUser);
-            app.get("/api/dishes/:did/recipes", RecipeController.recipeController.findRecipeByDishId);
-            //app.get("/api/recipes/random", RecipeController.recipeController.findRandomRecipes);
             app.get("/api/recipes", RecipeController.recipeController.findAllRecipes);
         }
         return RecipeController.recipeController;
@@ -69,7 +65,6 @@ export default class RecipeController {
         catch (e) {
             res.status(403).json({ error: e });
         }
-
     }
 
     /**
@@ -119,26 +114,6 @@ export default class RecipeController {
             res.status(403).json({ error: e });
         }
     }
-
-    /**
-     * @param {Request} req Represents request from client, including path
-     * parameter did identifying the primary key of the dish whose recipes are to be retrieved
-     * @param {Response} res Represents response to client, including the
-     * body formatted as JSON containing the recipes
-     */
-    findRecipeByDishId = (req: Request, res: Response) =>
-        RecipeController.recipeDao.findRecipeByDishId(req.params.did)
-            .then((recipes: Recipe[]) => res.json(recipes));
-
-    /**
-     * Retrieves 5 random recipes from the database and returns
-     * an array of recipes.
-     * @param {Request} req Represents request from client
-     * @param {Response} res Represents response to client
-     */
-    findRandomRecipes = (req: Request, res: Response) =>
-        RecipeController.recipeDao.findRandomRecipes()
-            .then((recipes: Recipe[]) => res.json(recipes))
 
     /**
      * Retrieves all recipes from the database and returns an array of recipes.
