@@ -11,13 +11,13 @@ import Recipe from "../models/recipes/Recipe";
  * <ul>
  *     <li>POST /api/cookbook/:rid/users/:uid to record that a user bookmarks a recipe
  *     </li>
- *     <li>DELETE /api/cookbook/:tid/users/:uid to record that a user no longer bookmarks a recipe
+ *     <li>DELETE /api/cookbook/:rid/users/:uid to record that a user no longer bookmarks a recipe
  *     </li>
  *     <li>GET /api/cookbook/users/:uid to retrieve all the recipes bookmarked by the user
  *     </li>
  * </ul>
  * @property {CookbookDao} cookbookDao Singleton DAO implementing cookbook CRUD operations
- * @property {CookBookController} cookbookController Singleton controller implementing
+ * @property {CookbookController} cookbookController Singleton controller implementing
  * RESTful Web service API
  */
 export default class CookbookController {
@@ -36,6 +36,7 @@ export default class CookbookController {
         if (CookbookController.cookbookController === null) {
             CookbookController.cookbookController = new CookbookController();
             app.post('/api/cookbook/:rid/users/:uid', CookbookController.cookbookController.userBookmarksRecipe);
+            app.delete('/api/cookbook/:rid/users/:uid', CookbookController.cookbookController.userUnbookmarksRecipe)
         }
         return CookbookController.cookbookController;
     }
@@ -43,7 +44,7 @@ export default class CookbookController {
     private constructor() {}
 
     /**
-     * Uses CookbookModel to insert cookbook into database
+     * Uses CookbookModel to insert bookmark into database
      * @param {Request} req Represents HTTP request, including the
      * path parameters rid and uid representing the recipe bookmarked by the user
      * @param {Response} res Represents response to client, including the
@@ -60,4 +61,23 @@ export default class CookbookController {
             res.status(403).json({ error: e });
         }
     }
+
+    /**
+     * Uses CookbookModel to remove bookmark from database
+     * @param {Request} req Represents HTTP request, including the
+     * path parameters rid and uid representing the recipe that is un-bookmarked by the user
+     * @param {Response} res Represents HTTP response, including status
+     * on whether un-bookmarking the recipe was successful or not
+     */
+    userUnbookmarksRecipe = (req: any, res: any) => {
+        try {
+            let userId = req.params.uid === "me" && req.session['profile'] ? req.session['profile']._id : req.params.uid;
+            return CookbookController.cookBookDao.userUnbookmarksRecipe(req.params.rid, userId)
+                .then(status => res.send(status));
+        }
+        catch (e) {
+            res.status(403).json({ error: e });
+        }
+    }
+
 }
