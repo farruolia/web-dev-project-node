@@ -18,7 +18,7 @@ const RecipeSchema = new mongoose.Schema<Recipe>({
         type: String,
         required: true,
     }],
-    description: {
+    dishId: {
         type: String
     },
     postedOn: {

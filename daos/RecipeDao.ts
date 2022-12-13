@@ -84,6 +84,18 @@ export default class RecipeDao {
             .exec()
             .catch(error => error);
 
+    /**
+     * Uses RecipeModel to retrieve a recipe by dishId
+     * @param {string} did Dish id
+     * @returns Promise To be notified when the recipe is retrieved from the database
+     */
+    findRecipeByDishId = async (did: string): Promise<any> =>
+        RecipeModel
+            .find({dishId: did})
+            .populate("chef")
+            .exec()
+            .catch(error => error);
+
 
     /**
      * Uses RecipeModel to retrieve all recipes

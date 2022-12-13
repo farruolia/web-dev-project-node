@@ -41,6 +41,7 @@ export default class RecipeController {
             app.delete("/api/recipes/:rid", RecipeController.recipeController.deleteRecipe);
             app.get("/api/recipes/:rid", RecipeController.recipeController.findRecipeById);
             app.get("/api/users/:uid/recipes", RecipeController.recipeController.findAllRecipesByUser);
+            app.get("/api/dishes/:did/recipes", RecipeController.recipeController.findRecipeByDishId);
             app.get("/api/recipes", RecipeController.recipeController.findAllRecipes);
         }
         return RecipeController.recipeController;
@@ -114,6 +115,16 @@ export default class RecipeController {
             res.status(403).json({ error: e });
         }
     }
+
+    /**
+     * @param {Request} req Represents request from client, including path
+     * parameter did identifying the primary key of the dish whose recipes are to be retrieved
+     * @param {Response} res Represents response to client, including the
+     * body formatted as JSON containing the recipes
+     */
+    findRecipeByDishId = (req: Request, res: Response) =>
+        RecipeController.recipeDao.findRecipeByDishId(req.params.did)
+            .then((recipes: Recipe[]) => res.json(recipes));
 
     /**
      * Retrieves all recipes from the database and returns an array of recipes.
