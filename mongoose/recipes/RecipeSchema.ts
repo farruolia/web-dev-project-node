@@ -19,8 +19,15 @@ const RecipeSchema = new mongoose.Schema<Recipe>({
         required: true,
     }],
     dishId: {
-        type: String
+        type: String,
     },
+    numberOfLikes: {
+        type: Number,
+    },
+    ingredients: [{
+        type: Schema.Types.ObjectId,
+        ref: "IngredientsModel",
+    }],
     postedOn: {
         type: Date,
         default: Date.now

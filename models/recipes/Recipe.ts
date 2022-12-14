@@ -18,6 +18,8 @@ export default interface Recipe {
     chef: User,
     steps: string[],
     dishId: string,
+    numberOfLikes: number,
+    ingredients: mongoose.Schema.Types.ObjectId[],
     postedOn?: Date,
     image?: string
 };
