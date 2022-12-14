@@ -62,4 +62,15 @@ export default class CookbookDao {
             .populate("bookmarkedRecipe")
             .exec()
             .catch(error => error);
+
+    /**
+     * Uses CookbookModel to retrieve whether a user has bookmarked a recipe or not
+     * @param {string} rid Recipe id of the recipe bookmarked by user
+     * @param {string} uid User id of the user who bookmarked recipes
+     * @returns Promise To be notified when the boolean value is returned
+     */
+    isBookmarkedByUser = async (rid: string, uid: string): Promise<Cookbook[]> =>
+        CookbookModel
+            .exists({bookmarkedRecipe: rid, bookmarkedBy: uid})
+            .catch(error => error);
 }
