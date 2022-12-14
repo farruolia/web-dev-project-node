@@ -13,6 +13,6 @@ import User from "../users/User";
  */
 
 export default interface Like {
-    post: Recipe,
+    likedRecipe: Recipe,
     likedBy: User
 };

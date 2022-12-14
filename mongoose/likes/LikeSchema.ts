@@ -7,9 +7,9 @@ import Like from "../../models/likes/Like";
 
 const LikeSchema = new mongoose.Schema<Like>({
 
-    post: {
+    likedRecipe: {
         type: Schema.Types.ObjectId,
-        ref: "PostModel"
+        ref: "RecipeModel"
     },
     likedBy: {
         type: Schema.Types.ObjectId,

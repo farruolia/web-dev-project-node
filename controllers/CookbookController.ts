@@ -3,7 +3,6 @@
  */
 import CookbookDao from "../daos/CookbookDao";
 import {Express, Request, Response} from "express";
-import Recipe from "../models/recipes/Recipe";
 
 /**
  * @class CookbookController Implements RESTful Web service API for cookbooks resource.

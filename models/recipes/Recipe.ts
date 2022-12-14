@@ -20,6 +20,7 @@ export default interface Recipe {
     dishId: string,
     numberOfLikes: number,
     ingredients: mongoose.Schema.Types.ObjectId[],
+    summary: string,
     postedOn?: Date,
     image?: string
 };

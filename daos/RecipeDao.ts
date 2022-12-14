@@ -4,6 +4,7 @@
  */
 import Recipe from "../models/recipes/Recipe";
 import RecipeModel from "../mongoose/recipes/RecipeModel";
+import UserDao from "./UserDao";
 
 /**
  * @class RecipeDao Implements Data Access Object managing data storage
@@ -33,10 +34,13 @@ export default class RecipeDao {
      * @param {Recipe} recipe Recipe to be created
      * @returns Promise To be notified when the recipe is inserted into the database
      */
-    createRecipe = async (uid: string, recipe: Recipe): Promise<Recipe> =>
-        RecipeModel
-            .create({...recipe, chef: uid})
+    createRecipe = async (uid: string, recipe: Recipe): Promise<Recipe> => {
+        const chef = await UserDao.getInstance().findUserById(uid);
+        return RecipeModel
+            .create({...recipe, chef: chef})
             .catch(error => error);
+    }
+
 
     /**
      * Updates recipe with new values in database

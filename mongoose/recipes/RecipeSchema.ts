@@ -12,7 +12,7 @@ const RecipeSchema = new mongoose.Schema<Recipe>({
     },
     chef: {
         type: Schema.Types.ObjectId,
-        ref: "UserModel"
+        ref: "UserModel",
     },
     steps: [{
         type: String,
@@ -23,11 +23,13 @@ const RecipeSchema = new mongoose.Schema<Recipe>({
     },
     numberOfLikes: {
         type: Number,
+        default: 0,
     },
     ingredients: [{
         type: Schema.Types.ObjectId,
         ref: "IngredientsModel",
     }],
+    summary: String,
     postedOn: {
         type: Date,
         default: Date.now
