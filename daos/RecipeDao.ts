@@ -108,6 +108,7 @@ export default class RecipeDao {
     findAllRecipes = async (): Promise<Recipe[]> => {
         return RecipeModel.find()
             .populate("chef")
+            .populate("ingredients")
             .exec()
             .catch(error => error);
     }
