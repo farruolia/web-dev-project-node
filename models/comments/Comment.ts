@@ -14,7 +14,7 @@ import Recipe from "../recipes/Recipe";
  */
 export default interface Comment {
     _id?: mongoose.Schema.Types.ObjectId,
-    post: Recipe,
+    recipe: Recipe,
     comment: string,
     postedBy: User,
     postedOn?: Date

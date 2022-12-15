@@ -6,9 +6,9 @@ import mongoose, {Schema} from "mongoose";
 import Comment from "../../models/comments/Comment";
 
 const CommentSchema = new mongoose.Schema<Comment>({
-    post: {
+    recipe: {
         type: Schema.Types.ObjectId,
-        ref: "PostModel"
+        ref: "RecipeModel"
     },
     comment: {
         type: String,
