@@ -6,8 +6,6 @@ import Comment from "../models/comments/Comment";
 import CommentModel from "../mongoose/comments/CommentModel";
 import UserDao from "./UserDao";
 import RecipeDao from "./RecipeDao";
-import Recipe from "../models/recipes/Recipe";
-import RecipeModel from "../mongoose/recipes/RecipeModel";
 
 /**
  * @class CommentDao Implements Data Access Object managing data storage

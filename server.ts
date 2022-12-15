@@ -21,6 +21,7 @@ import AuthenticationController from "./controllers/AuthenticationController";
 import CookbookController from "./controllers/CookbookController";
 import LikeController from "./controllers/LikeController";
 import CommentController from "./controllers/CommentController";
+import IngredientController from "./controllers/IngredientController";
 require('dotenv').config({debug: true});
 
 const cors = require("cors");
@@ -69,6 +70,7 @@ RecipeController.getInstance(app);
 CookbookController.getInstance(app);
 LikeController.getInstance(app);
 CommentController.getInstance(app);
+IngredientController.getInstance(app);
 
 /**
  * Start a server listening at port 4000 locally
