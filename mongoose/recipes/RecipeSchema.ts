@@ -27,7 +27,7 @@ const RecipeSchema = new mongoose.Schema<Recipe>({
     },
     ingredients: [{
         type: Schema.Types.ObjectId,
-        ref: "IngredientsModel",
+        ref: "IngredientModel",
     }],
     summary: String,
     postedOn: {

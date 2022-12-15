@@ -74,6 +74,7 @@ export default class RecipeDao {
         RecipeModel
             .findById(rid)
             .populate("chef")
+            .populate("ingredients")
             .exec()
             .catch(error => error);
 
@@ -85,6 +86,7 @@ export default class RecipeDao {
         RecipeModel
             .find({chef: uid})
             .populate("chef")
+            .populate("ingredients")
             .exec()
             .catch(error => error);
 
@@ -97,6 +99,7 @@ export default class RecipeDao {
         RecipeModel
             .find({dishId: did})
             .populate("chef")
+            .populate("ingredients")
             .exec()
             .catch(error => error);
 
@@ -107,6 +110,7 @@ export default class RecipeDao {
      */
     findAllRecipes = async (): Promise<Recipe[]> => {
         return RecipeModel.find()
+            .populate("chef")
             .populate("ingredients")
             .exec()
             .catch(error => error);
