@@ -11,6 +11,7 @@ import {Express} from "express";
  *     <li>POST /api/comments/:rid/users/:uid to create a new comment instance for
  *     a given user</li>
  *     <li>GET /api/comments/:rid to retrieve all comments for a particular recipe instance</li>
+ *     <li>GET /api/comments/users/:uid to retrieve all comments by a user</li>
  * </ul>
  * @property {CommentDao} commentDao Singleton DAO implementing comments CRUD operations
  * @property {CommentController} commentController Singleton controller implementing
@@ -33,6 +34,7 @@ export default class CommentController {
 
             app.post("/api/comments/:rid/users/:uid", CommentController.commentController.createComment);
             app.get('/api/comments/:rid', CommentController.commentController.findComments);
+            app.get('/api/comments/users/:uid', CommentController.commentController.findCommentsByUser);
         }
         return CommentController.commentController;
     }
@@ -68,6 +70,23 @@ export default class CommentController {
         try {
             let userId = req.params.uid === "me" && req.session['profile'] ? req.session['profile']._id : req.params.uid;
             return CommentController.commentDao.findComments(req.params.rid)
+                .then((comments) => res.json(comments));
+        }
+        catch (e) {
+            res.status(403).json({ error: e });
+        }
+    }
+
+    /**
+     * Retrieves all comments from the database for a particular user
+     * @param {Request} req Represents request from client
+     * @param {Response} res Represents response to client, including the
+     * body formatted as JSON arrays containing the comment objects
+     */
+    findCommentsByUser = (req: any, res:any) => {
+        try {
+            let userId = req.params.uid === "me" && req.session['profile'] ? req.session['profile']._id : req.params.uid;
+            return CommentController.commentDao.findCommentsByUser(userId)
                 .then((comments) => res.json(comments));
         }
         catch (e) {

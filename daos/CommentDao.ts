@@ -57,4 +57,16 @@ export default class CommentDao {
             .exec()
             .catch(error => error);
 
+    /**
+     * Uses CommentModel to retrieve all comments for a user
+     * @returns Promise To be notified when the comments are retrieved from the database
+     */
+    findCommentsByUser = async (uid: string): Promise<Comment[]> =>
+        CommentModel
+            .find({postedBy: uid})
+            .populate("postedBy")
+            .populate("recipe")
+            .exec()
+            .catch(error => error);
+
 }
