@@ -15,8 +15,7 @@ const RecipeSchema = new mongoose.Schema<Recipe>({
         ref: "UserModel",
     },
     steps: [{
-        type: String,
-        required: true,
+        type: String
     }],
     dishId: {
         type: String,
