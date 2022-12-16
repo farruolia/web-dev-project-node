@@ -59,7 +59,13 @@ export default class LikeDao {
     findRecipesLikedByUser = async (uid: string): Promise<Like[]> =>
         LikeModel
             .find({likedBy: uid})
-            .populate("likedRecipe")
+            .populate({
+                path: 'likedRecipe',
+                populate: {
+                    path: 'chef',
+                    model: 'UserModel'
+                }
+            })
             .exec()
             .catch(error => error);
 
@@ -72,6 +78,13 @@ export default class LikeDao {
         LikeModel
             .find({likedRecipe: rid})
             .populate("likedBy")
+            .populate({
+                path: 'likedRecipe',
+                populate: {
+                    path: 'chef',
+                    model: 'UserModel'
+                }
+            })
             .exec()
             .catch(error => error);
 

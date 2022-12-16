@@ -54,6 +54,13 @@ export default class CommentDao {
         CommentModel
             .find({recipe: rid})
             .populate("postedBy")
+            .populate({
+                path: 'recipe',
+                populate: {
+                    path: 'chef',
+                    model: 'UserModel'
+                }
+            })
             .exec()
             .catch(error => error);
 
@@ -65,7 +72,13 @@ export default class CommentDao {
         CommentModel
             .find({postedBy: uid})
             .populate("postedBy")
-            .populate("recipe")
+            .populate({
+                path: 'recipe',
+                populate: {
+                    path: 'chef',
+                    model: 'UserModel'
+                }
+            })
             .exec()
             .catch(error => error);
 

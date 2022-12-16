@@ -59,7 +59,13 @@ export default class CookbookDao {
     findRecipesBookmarkedByUser = async (uid: string): Promise<Cookbook[]> =>
         CookbookModel
             .find({bookmarkedBy: uid})
-            .populate("bookmarkedRecipe")
+            .populate({
+                path: 'bookmarkedRecipe',
+                populate: {
+                    path: 'chef',
+                    model: 'UserModel'
+                }
+            })
             .exec()
             .catch(error => error);
 
