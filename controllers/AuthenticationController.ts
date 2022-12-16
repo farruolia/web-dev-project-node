@@ -63,7 +63,7 @@ export default class AuthenticationController {
                 res.sendStatus(403);
                 return;
             } else {
-                existingUser.password = '*****';
+               // existingUser.password = '*****';
                 req.session['profile'] = existingUser;
                 res.json(existingUser);
             }
