@@ -24,7 +24,10 @@ const UserSchema = new mongoose.Schema<User>({
         required: true,
         default: `testEmail${Date.now()}`
     },
-    profilePhoto: String,
+    profilePhoto: {
+        type: String,
+        default: "defaultUser.jpeg"
+    },
     userType: {
         type: String,
         required: true

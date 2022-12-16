@@ -33,7 +33,10 @@ const RecipeSchema = new mongoose.Schema<Recipe>({
         type: Date,
         default: Date.now
     },
-    image: String
+    image: {
+        type: String,
+        default: "defaultRecipe.jpeg"
+    }
 }, {collection: "recipes"});
 
 export default RecipeSchema;
