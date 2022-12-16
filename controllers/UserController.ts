@@ -68,9 +68,14 @@ export default class UserController {
      * @param {Response} res Represents response to client, including status
      * on whether updating a user was successful or not
      */
-    updateUser = (req: Request, res: Response) =>
-        UserController.userDao.updateUser(req.params.uid, req.body)
-            .then((status) => res.send(status));
+    updateUser = async (req: any, res: any) => {
+        const response = await UserController.userDao.updateUser(req.params.uid, req.body)
+        if (response.acknowledged === true) {
+            req.session['profile'] = await UserController.userDao.findUserById(req.params.uid)
+        }
+        return res.send(response)
+    }
+
 
     /**
      * Removes a user instance from the database

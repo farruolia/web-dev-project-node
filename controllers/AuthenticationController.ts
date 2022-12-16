@@ -42,7 +42,6 @@ export default class AuthenticationController {
     profile = (req: any, res: any) => {
         const profile = req.session['profile'];
         if (profile) {
-            profile.password = "";
             res.json(profile);
         } else {
             res.sendStatus(403);
